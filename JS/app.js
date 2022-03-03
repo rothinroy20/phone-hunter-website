@@ -1,56 +1,45 @@
-const allPlayers = () => {
+const allPhone = () => {
     document.getElementById("Phone-container").innerHTML = "";
     document.getElementById("spinner").style.display = "block";
     // const searchValue = document.getElementById("search-box").value;
 
-    const url = `https://www.thesportsdb.com/api/v1/json/2/searchplayers.php?p=${searchValue}`;
+    const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
     console.log(url);
     fetch(url)
         .then((response) => response.json())
-        .then((data) => showPlayerDetails(data.player));
-
-    // document.getElementById("spinner").style.display = "none";
+        .then((data) => showPhoneDetails(data.phone));
 
 };
 
-const showPlayerDetails = (players) => {
-    for (const player of players) {
+const showPlayerDetails = (phones) => {
+    for (const phone of phones) {
         const parent = document.getElementById("Phone-container");
         const div = document.createElement("div");
         div.innerHTML = `<div class="card border p-5">
             <div class="pro-pic">
-                <img class="w-50" src="${player.strThumb}" alt="">
+                <img class="w-50" src="${phone.strThumb}" alt="">
             </div>
-            <h2>Name: ${player.strPlayer}</h2>
-            <h5>country: ${player.strNationality}</h5>
-            <p></p>
-            <div class="allbutton">
-                <button class="btn btn-danger">Delete</button>
-                <button onclick="details('${player.idplayer}')" class="btn btn-success">Details</button>
-            </div>
-            </div>`;
+            <h2>Name: ${phone.strphone}</h2>
+          `;
         parent.appendChild(div);
-        console.log(player);
+        console.log(phone);
     }
 };
 
 const details = (id) => {
-    const url = `https://www.thesportsdb.com/api/v1/json/2/lookupplayer.php?id=${id}`;
+    const url = `https://openapi.programming-hero.com/api/phone/${id}`;
     fetch(url)
         .then(response => response.json())
-        .then((data) => setDetails(data.player[0]));
+        .then((data) => setDetails(data.phone[0]));
 };
 
 const setDetails = (info) => {
     console.log(info.strGender);
-
-    if (info.strGender == "Male") {
-        document.getElementById("male").style.display = "block";
-    }
-    document.getElementById("details-container").innerHTML = `
+}
+document.getElementById("details-container").innerHTML = `
     <div>
     <img src="" alt="">
-    <h1>name: ${info.strPlayer}</h1>
+    <h1>name: ${info.strphone}</h1>
     </div>
     `
 };
